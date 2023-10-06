@@ -25,27 +25,42 @@ function saveUserObject() {
 
 function validateData(e) {
     e.preventDefault();
-    submitAlert.classList.remove('invisible')
-    const reEmail = /(\w+?@\w+?\x2E.+)/
+    submitAlert.classList.toggle('invisible');
+    const classes = ['alert-warning', 'alert-danger', 'alert-success'];
+    const reEmail = /(\w+?@\w+?\x2E.+)/;
+    const rePassword = /^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/;
     if (name.value == "" || email.value == "" || password.value == "" || password1 == "") {
+        submitAlert.classList.remove(...classes);
+        submitAlert.classList.add('alert-warning');
         submitAlert.innerText = "Rellena todos los campos";
     } else if (reEmail.test(email.value) !== true) {
-        submitAlert.innerText = "Por favor inserte un correo válido";
+        submitAlert.classList.remove(...classes);
+        submitAlert.classList.add('alert-warning');
+        submitAlert.innerText = "Inserte un correo válido.";
+    } else if (rePassword.test(password.value) !== true) {
+        submitAlert.classList.remove(...classes);
+        submitAlert.classList.add('alert-warning');
+        submitAlert.innerText = "La contraseña debe incluir: un mínimo de 6 caracteres, 1 letra mayúscula, 1 letra minúscula, 1 número, y sin espacios";
     } else if (password.value !== password1.value) {
-        submitAlert.innerText = "Contraseña incorrecta";
+        submitAlert.classList.remove(...classes);
+        submitAlert.classList.add('alert-danger');
+        submitAlert.innerText = "Las contraseñas no coinciden.";
     } else {
-        submitAlert.classList.remove('alert-warning').add('alert-success');
-        submitAlert.innerText = `Usuario creado`;
+        submitAlert.classList.remove(...classes);
+        submitAlert.classList.add('alert-success');
+        submitAlert.innerText = `Usuario creado correctamente.`;
         saveUserObject()
+        // createCard()
+
     }
     setTimeout(() => {
-        submitAlert.classList.add('invisible');
+        submitAlert.classList.contains('alert-success') ? window.location.replace('./usuarios.html'):false;
+        submitAlert.classList.toggle('invisible');
     }, 3000);
 
 }
 
-function createCard(e) {
-    e.preventDefault();
+function createCard() {
     const savedUsers = JSON.parse(localStorage.getItem("allUsers"));
 
     usersContainer.innerHTML +=
