@@ -4,18 +4,18 @@ const password = document.getElementById('password');
 const password1 = document.getElementById('password1');
 const myForm = document.getElementById('myForm');
 const submitAlert = document.getElementById('submitAlert')
-const usersContainer = document.getElementById('usertsContainer');
+const usersContainer = document.getElementById('usersContainer');
 
 const allUsers = JSON.parse(localStorage.getItem("allUsers")) || [];
+const imgLink = "https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?w=1380&t=st=1696513773~exp=1696514373~hmac=ae54a25456b5502c33dc3667df38451d7c7498c06c88d608cb4fc95fffbac0b7"
 
 
-
-function saveUserObject() {
+const saveUserObject = () => {
     const user = {
         name: name.value,
         email: email.value,
         password: password.value,
-        password1: password1.value
+        password1: password1.value,
     };
 
     allUsers.push(user);
@@ -23,7 +23,31 @@ function saveUserObject() {
     localStorage.setItem('allUsers', JSON.stringify(allUsers));
 }
 
-function validateData(e) {
+const createCard = () => {
+    const savedUsers = JSON.parse(localStorage.getItem("allUsers"));
+    console.log(savedUsers)
+    console.log(savedUsers[0].name)
+    savedUsers.forEach(user => {
+
+        usersContainer.innerHTML +=
+            `<div class="col-sm-4">
+                <div class="card" >
+                    <img src=${imgLink} class="card-img-top" alt="card-image-1">
+                    <div class="card-img-overlay text-center">
+                        <i class="bi bi-person-circle display-1"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">${user.name}</h5>
+                        <p class="card-text">${user.email}</p>
+                    </div>
+                </div>
+            </div>`
+    });
+}
+
+createCard();
+
+const validateData = (e) => {
     e.preventDefault();
     submitAlert.classList.toggle('invisible');
     const classes = ['alert-warning', 'alert-danger', 'alert-success'];
@@ -50,31 +74,15 @@ function validateData(e) {
         submitAlert.classList.add('alert-success');
         submitAlert.innerText = `Usuario creado correctamente.`;
         saveUserObject()
-        // createCard()
+        createCard()
 
     }
     setTimeout(() => {
-        submitAlert.classList.contains('alert-success') ? window.location.replace('./usuarios.html'):false;
+        submitAlert.classList.contains('alert-success') ? window.location.replace('./usuarios.html') : false;
         submitAlert.classList.toggle('invisible');
     }, 3000);
 
 }
 
-function createCard() {
-    const savedUsers = JSON.parse(localStorage.getItem("allUsers"));
-
-    usersContainer.innerHTML +=
-        `<div class="card" style="width: 18rem;">
-            <img src="${savedUsers[i].link}"
-                class="card-img-top" alt="card-image-1">
-            <div class="card-body">
-                <h5 class="card-title">${savedUsers[i].name}}</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>`
-}
 
 myForm.addEventListener('submit', validateData);
