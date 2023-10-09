@@ -17,6 +17,7 @@ const desventajasText = document.getElementById(
 	"desventajasText"
 );
 
+
 const allUsers =
 	JSON.parse(localStorage.getItem("allUsers")) || [];
 const imgLink =
