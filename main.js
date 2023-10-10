@@ -17,7 +17,6 @@ const desventajasText = document.getElementById(
 	"desventajasText"
 );
 
-
 const allUsers =
 	JSON.parse(localStorage.getItem("allUsers")) || [];
 const imgLink =
@@ -111,22 +110,28 @@ const validateData = (e) => {
 	}, 3000);
 };
 
-const ventajasToggle = (e) => {
-	e.preventDefault();
-	ventajasText.classList.remove("d-none");
-	desventajasText.classList.add("d-none");
-	ventajasBtn.classList.add("active");
-	desventajasBtn.classList.remove("active");
-};
+if (ventajasBtn !== null) {
+	const ventajasToggle = (e) => {
+		e.preventDefault();
+		ventajasText.classList.remove("d-none");
+		desventajasText.classList.add("d-none");
+		ventajasBtn.classList.add("active");
+		desventajasBtn.classList.remove("active");
+	};
 
-const desventajasToggle = (e) => {
-	e.preventDefault();
-	desventajasText.classList.remove("d-none");
-	ventajasText.classList.add("d-none");
-	desventajasBtn.classList.add("active");
-	ventajasBtn.classList.remove("active");
-};
+	const desventajasToggle = (e) => {
+		e.preventDefault();
+		desventajasText.classList.remove("d-none");
+		ventajasText.classList.add("d-none");
+		desventajasBtn.classList.add("active");
+		ventajasBtn.classList.remove("active");
+	};
 
-ventajasBtn.addEventListener("click", ventajasToggle);
-desventajasBtn.addEventListener("click", desventajasToggle);
+	ventajasBtn.addEventListener("click", ventajasToggle);
+	desventajasBtn.addEventListener(
+		"click",
+		desventajasToggle
+	);
+}
+
 myForm.addEventListener("submit", validateData);
