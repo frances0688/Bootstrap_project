@@ -16,6 +16,7 @@ const desventajasBtn = document.getElementById(
 const desventajasText = document.getElementById(
 	"desventajasText"
 );
+const scrollspy = document.getElementById("panel16");
 
 const allUsers =
 	JSON.parse(localStorage.getItem("allUsers")) || [];
@@ -132,6 +133,19 @@ if (ventajasBtn !== null) {
 		"click",
 		desventajasToggle
 	);
+}
+
+if (scrollspy !== null) {
+	scrollspy.addEventListener("shown.bs.collapse", () => {
+		console.log("hola");
+		const scrollElem = document.querySelector(
+			".scrollspy-example"
+		);
+		console.log(scrollElem);
+		bootstrap.ScrollSpy.getOrCreateInstance(
+			scrollElem
+		).refresh();
+	});
 }
 
 myForm.addEventListener("submit", validateData);

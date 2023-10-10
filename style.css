@@ -1,3 +1,11 @@
+body {
+    margin-bottom: 3vh;
+}
+
 .accordion {
     --bs-accordion-active-bg: #ebd9f6;
+}
+
+.card {
+    margin-bottom: 1.5vh;
 }
